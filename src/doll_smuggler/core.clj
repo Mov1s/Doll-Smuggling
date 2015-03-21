@@ -16,3 +16,14 @@
     )
   )
 )
+
+(defn knapsack
+  "Finds the best combination of dolls to give the most value for a max weight"
+  [maxWeight dolls]
+  (let [dollcount (count dolls)
+        weights (map (fn [doll] (doll :weight)) dolls)
+        values (map (fn [doll] (doll :value)) dolls)]
+    (m dollcount weights maxWeight values)
+  )
+)
+
