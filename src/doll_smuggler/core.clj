@@ -8,21 +8,38 @@
   (println "Test")
 )
 
+(declare mm)
+
 (defn m
   "The max value attained with weight less than or equal to w using items up to i"
-  [i w weight v chosenIndexes]
-  (if (= i 0)
-    0
-    (if (> (nth w (dec i)) weight)
-      (m (dec i) w weight v chosenIndexes)
-      (let [ notThis (m (dec i) w weight v chosenIndexes)
-             this (+ (m (dec i) w (- weight (nth w (dec i))) v chosenIndexes) (nth v (dec i))) ]
-        (if (>= notThis this) notThis
-	   (do (conj chosenIndexes (dec i)) this))
+  [i w dolls]
+  (
+    ;If you try to find the max weight of 0 items it will always be 0, :P
+    if (< i 0) [0 []]
+
+    ;Get the weight and value of the doll at the i position
+    (let [{wi :weight vi :value} (nth dolls i)]
+
+      ;If the weight of the doll is greater than the max weight, skip it and try the next doll
+      (if (> wi w) (mm (dec i) w dolls)
+
+        (let [[vn nindexes] (mm (dec i) w dolls)
+              [vy yindexes] (mm (dec i) (- w wi) dolls)]
+
+          ;If the max value acheivable by taking this doll is greater than the max value achievable without taking this doll
+	  ;return the max value for this position (i) and add i to the list of taken indexes
+          (if (> (+ vy vi) vn) [(+ vy vi) (conj yindexes  i)]
+
+            ;Otherwise take the max value without this doll and continue the recurrsion
+            (mm (dec i) w dolls)
+          )        
+        )
       )
     )
   )
 )
+
+(def mm (memoize m))
 
 (defn formatdolls
   "Turns a list of doll info into a list of dictionaries of dolls"
@@ -33,11 +50,9 @@
 (defn knapsack
   "Finds the best combination of dolls to give the most value for a max weight"
   [maxWeight dolls]
-  (let [dollcount (count dolls)
-        weights (map (fn [doll] (doll :weight)) dolls)
-        values (map (fn [doll] (doll :value)) dolls)]
-    ;(m dollcount weights maxWeight values)
-    '(test 4 10)
+  (let [formatteddolls (formatdolls dolls)
+        dollcount (dec (count formatteddolls))]
+    (m dollcount maxWeight formatteddolls)
   )
 )
 

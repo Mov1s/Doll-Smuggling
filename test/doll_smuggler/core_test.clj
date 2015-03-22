@@ -47,5 +47,8 @@
 		     dusty 43 75
  		     dorothy 50 160
 		     candice 153 200))
-                    
-    (is (= (knapsack 400 dolls) solution))))
+
+    (def mysolution (knapsack 400 dolls))
+
+    (println mysolution)                    
+    (is (= mysolution solution))))
