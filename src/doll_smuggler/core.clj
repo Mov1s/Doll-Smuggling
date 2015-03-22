@@ -51,24 +51,6 @@
   [items indexes]
   (map (partial nth items) indexes))
 
-(defn knapsack
-  "Takes a formatted list of dolls and the max weight the old lady can carry and
-   finds the best combination of dolls to give the most value for that weight.
-   Returns a formatted list of dolls."
-  [maxWeight dolls]
-  (let [dollcount (dec (count dolls)) solution (m dollcount maxWeight dolls)]
-    (filter-by-index dolls (nth solution 1))
-  )
-)
-
-(defn knapsack-unformatted
-  "Takes an unformatted list of dolls and the max weight the old lady can carry and
-   finds the best combination of dolls to give the most value for that weight.
-   Returns a formatted list of dolls."
-   [maxWeight dolls]
-   (knapsack maxWeight (format-dolls dolls))
-)
-
 (defn print-problem
   "Takes a formatted list of dolls, a formatted solution, and a max weight and prints the entire problem
    in an easily readable format."
@@ -80,13 +62,27 @@
   (print-table solution)
 )
 
-(defn -main
-  "Shortcut for using knapsack-unformatted and print-problem"
+(defn knapsack
+  "Takes a formatted list of dolls and the max weight the old lady can carry and
+   finds the best combination of dolls to give the most value for that weight.
+   Prints out the entire problem including the solution. Returns a formatted list of dolls."
   [maxWeight dolls]
-  (
-    (let [formattedDolls (format-dolls dolls)
-          solution (knapsack maxWeight formattedDolls)]
-      (print-problem maxWeight formattedDolls solution)
-    )
+  (let [dollcount (dec (count dolls)) solution (m dollcount maxWeight dolls) solutionDolls (filter-by-index dolls (nth solution 1))]
+    (print-problem maxWeight dolls solutionDolls)
+    solutionDolls
   )
+)
+
+(defn knapsack-unformatted
+  "Takes an unformatted list of dolls and the max weight the old lady can carry and
+   finds the best combination of dolls to give the most value for that weight.
+   Prints out the entire problem including the solution. Returns a formatted list of dolls."
+   [maxWeight dolls]
+   (knapsack maxWeight (format-dolls dolls))
+)
+
+(defn -main
+  "Shortcut for using knapsack-unformatted"
+  [maxWeight dolls]
+  (knapsack-unformatted maxWeight dolls)
 )
