@@ -79,19 +79,19 @@ doll-smuggler.core=>
 
 ## My Adventure
 I first started reading a few articles and tutorials on Clojure. Chiefly these two:
-(https://aphyr.com/posts/302-clojure-from-the-ground-up-basic-types)
-(http://www.braveclojure.com/do-things/)
+https://aphyr.com/posts/302-clojure-from-the-ground-up-basic-types
+http://www.braveclojure.com/do-things/
 
 I then went to wikipedia, which showed me the algorithm I used to solve the problem.
-(http://en.wikipedia.org/wiki/Knapsack_problem#0.2F1_knapsack_problem)
+http://en.wikipedia.org/wiki/Knapsack_problem#0.2F1_knapsack_problem
 
 Feeling like I had a good grasp of the syntax I wrote my first version of this solution. It returned the max value of the dolls as an integer but not the names of the dolls it chose. As I tried to modify my solution to keep track of the chosen dolls I started to struggle with Clojure and my object-oriented thought process. I sought some guidance and found this example showing a possible solution to the problem in Clojure.
-(http://rosettacode.org/wiki/Knapsack_problem/0-1#Clojure)
+http://rosettacode.org/wiki/Knapsack_problem/0-1#Clojure
 
 It's use of `let` instead of the `max` solution I had been using turned out to be the missing piece I needed to keep track of the dolls chosen by the algorithm instead of just the values. Also its use of `memoize` contributed to the speed of my solution.
 
 After everything was working and I had written some tests to prove it, I refactored the functions and added the table printing behavior you see above to allow easy interpretation of the results.
 
 This was an interesting challenge and I came out of it with two major take-a-ways:
-1. Clojure is frustrating for the first 8 hours
-2. I should continue to solve problems with it until it is not...
+  1. Clojure is frustrating for the first 8 hours
+  2. I should continue to solve problems with it until it is not...
